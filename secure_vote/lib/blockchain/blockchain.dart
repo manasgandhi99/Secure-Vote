@@ -2,12 +2,12 @@ import 'package:flutter/services.dart';
 import 'package:web3dart/web3dart.dart';
 
 class Blockchain {
-
+  
   String contractName = 'Voting';
   
   Future<DeployedContract> getContract() async {
-    String abi = await rootBundle.loadString("assets/abi.json");
-    String contractAddress = "0xd55B64d9b7816f2e2D9be07CbC52303A77B7163b";
+    String abi = await rootBundle.loadString("abi.json");
+    String contractAddress = "0x57E73b6F1E5cd741146E96B4Bb35F93e12016Cf8";
 
     DeployedContract contract = DeployedContract(
       ContractAbi.fromJson(abi, contractName),
