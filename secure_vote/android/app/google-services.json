@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1033993099596",
+    "project_id": "voting-app-85a25",
+    "storage_bucket": "voting-app-85a25.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033993099596:android:3a2032cd3547b744d217e9",
+        "android_client_info": {
+          "package_name": "com.alphadevs.secure_vote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033993099596-2gsu8jt6cbbgma41sglc41nbcka699ch.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alphadevs.secure_vote",
+            "certificate_hash": "ea1bebe4df90e2a186e56b020333f775ccd01bb0"
+          }
+        },
+        {
+          "client_id": "1033993099596-av0m9pt93q62gi2se003jgpjaob2ercu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alphadevs.secure_vote",
+            "certificate_hash": "0ed331fe9491a4f73d72517a4f994ad9492404f1"
+          }
+        },
+        {
+          "client_id": "1033993099596-gh9146unb11hdmlkvsqcrl06l25rcul4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUKThNJ1ntupgAWfqKo8N1YBWfkKzFb68"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033993099596-gh9146unb11hdmlkvsqcrl06l25rcul4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
