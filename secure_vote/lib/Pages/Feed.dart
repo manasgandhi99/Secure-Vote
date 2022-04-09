@@ -1,5 +1,5 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
-
 
 class ElectionFeed extends StatefulWidget {
   const ElectionFeed({Key? key}) : super(key: key);
@@ -25,24 +25,17 @@ class _ElectionFeedState extends State<ElectionFeed> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                Text("Election Name"),
+                const Text("Election Name"),
                 SizedBox(height: size.height*0.02),
 
-                Text("Election Description"),
+                const Text("Election Description"),
                 SizedBox(height: size.height*0.02),
-                Text("Election Status"),
+                const Text("Election Status"),
                 
 
               ],),
             ),
           );
-        },
-      ),
-
-      floatingActionButton: FloatingActionButton(
-        
-        onPressed: (){
-
         },
       ),
       

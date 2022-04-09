@@ -45,11 +45,11 @@ final Map<String, Color> habitsStringToColorMap = {
 }; 
 
 final Map<String, Color> colorMoodMap = {
-    "Terrible": Color(0xffa3a8b8), //darkgrey
-    "Bad": Color(0xffcbcbcb), //grey
-    "Neutral": Color(0xfffdefcc), //yellow
-    "Good": Color(0xffffa194), //red
-    "Wonderful": Color(0xffadd2ff) //blue
+    "Terrible": const Color(0xffa3a8b8), //darkgrey
+    "Bad": const Color(0xffcbcbcb), //grey
+    "Neutral": const Color(0xfffdefcc), //yellow
+    "Good": const Color(0xffffa194), //red
+    "Wonderful": const Color(0xffadd2ff) //blue
   };
 
 const Map<String, String> authExceptionMessageMap = {
