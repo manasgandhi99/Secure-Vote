@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             MaterialButton(
               child: const Text("Create"),
-              color: Colors.amber,
+              color: Colors.orange,
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const CreateElection()),
@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             MaterialButton(
               child: const Text("Auth"),
-              color: Colors.amber,
+              color: Colors.blue,
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const Login()),
@@ -71,11 +71,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }

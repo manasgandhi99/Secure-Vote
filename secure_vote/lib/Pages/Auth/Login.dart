@@ -59,7 +59,7 @@ class _LoginState extends State<Login> {
                         const Icon(Icons.person, size: 90),
                         const SizedBox(width: 10),
                         Text(
-                          'Welcome To \nSercure Vote',
+                          'Welcome To \nSecure Vote',
                           softWrap: true,
                           style: GoogleFonts.getFont("Lato",
                               fontSize: 30, fontWeight: FontWeight.bold),
