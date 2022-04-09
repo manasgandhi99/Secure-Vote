@@ -80,11 +80,11 @@ class _CreateElectionState extends State<CreateElection> {
                             ConnectionState.waiting) {
                           return Loading();
                         } else {
-                          final data = snapshot.data ;
-                          if(data !=null){
+                          final data = snapshot.data as List;
+                          
                           return Container(
                             child: Column(children: [Text(data[1]),]),
-                          );}
+                          );
                         }
                       }),
                     )
