@@ -3,11 +3,10 @@ import 'package:secure_vote/Pages/Auth/Login.dart';
 import 'package:secure_vote/Pages/CreateElection/CreateElection.dart';
 import 'package:secure_vote/Pages/Navigation.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(const CreateElection());
 }
 
 class MyApp extends StatelessWidget {

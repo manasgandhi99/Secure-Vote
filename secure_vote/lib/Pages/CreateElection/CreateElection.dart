@@ -81,9 +81,10 @@ class _CreateElectionState extends State<CreateElection> {
                           return Loading();
                         } else {
                           final data = snapshot.data as List;
-                          
                           return Container(
-                            child: Column(children: [Text(data[1]),]),
+                            child: Column(children: [
+                              Text(data[1]),
+                            ]),
                           );
                         }
                       }),
