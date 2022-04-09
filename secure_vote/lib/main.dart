@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:secure_vote/Pages/Auth/Login.dart';
+import 'package:secure_vote/Pages/CreateElection/CreateElection.dart';
+import 'package:secure_vote/Pages/Navigation.dart';
 
 void main() => runApp(const MyApp());
 
@@ -7,11 +10,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-      title: 'Secure Vote',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const MyHomePage(title: 'Secure Vote'),
-    );
+        title: 'Secure Vote',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(primarySwatch: Colors.blue),
+        home: const MyHomePage(title: 'Secure Vote'),
+      );
 }
 
 class MyHomePage extends StatefulWidget {
@@ -37,8 +40,30 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text('$_counter', style: Theme.of(context).textTheme.headline4),
+            MaterialButton(
+              child: const Text("Nav"),
+              color: Colors.pink,
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BottomNav()),
+              ),
+            ),
+            MaterialButton(
+              child: const Text("Create"),
+              color: Colors.amber,
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CreateElection()),
+              ),
+            ),
+            MaterialButton(
+              child: const Text("Auth"),
+              color: Colors.amber,
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Login()),
+              ),
+            ),
           ],
         ),
       ),
