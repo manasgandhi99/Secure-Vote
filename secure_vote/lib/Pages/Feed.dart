@@ -105,7 +105,7 @@ class _ElectionFeedState extends State<ElectionFeed> {
                           if (!electionIds.contains(data[0])) {
                             return const SizedBox();
                           }
-                          userElections = 1;
+                          userElections += 1;
                           return Padding(
                             padding: const EdgeInsets.fromLTRB(5, 10, 5, 0),
                             child: InkWell(

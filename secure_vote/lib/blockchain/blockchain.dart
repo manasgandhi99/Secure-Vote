@@ -29,6 +29,9 @@ class Blockchain {
     EthPrivateKey credential = EthPrivateKey.fromHex(privateKey);
     DeployedContract contract = await getContract();
     ContractFunction function = contract.function(functionName);
+    print(contract);
+    print(function);
+    print(args);
     dynamic result = await ethereumClient.sendTransaction(
       credential,
       Transaction.callContract(

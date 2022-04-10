@@ -282,7 +282,8 @@ class _LoginState extends State<Login> {
 
                         //TODO: Store private key in shared pref
                         SharedPreferences prefs = await SharedPreferences.getInstance();
-                        prefs.setString(PRIVATEKEYSHAREDPREFNAME, privateKeyController.text.trim());
+                        await prefs.setString(PRIVATEKEYSHAREDPREFNAME, privateKeyController.text.trim());
+                        
                         // Navigator.push(
                         //   context,
                         //   MaterialPageRoute(

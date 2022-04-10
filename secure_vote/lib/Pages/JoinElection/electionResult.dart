@@ -16,7 +16,8 @@ class ElectionResults extends StatefulWidget {
 
 class _ElectionResultsState extends State<ElectionResults> {
   var httpClient = Client();
-  String apiUrl = "https://ropsten.infura.io/v3/fc3a18ef9bd9423bb6189a6381082e32";
+  String apiUrl =
+      "https://ropsten.infura.io/v3/fc3a18ef9bd9423bb6189a6381082e32";
   var ethereumClient;
   late int numCandidates;
 
@@ -36,115 +37,132 @@ class _ElectionResultsState extends State<ElectionResults> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: SingleChildScrollView(
-            child: Column(children: [
-          Container(
-            decoration: BoxDecoration(
-                color: Colors.blue[300],
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(8),
-                  topRight:  Radius.circular(8),
-                )),
-            padding: EdgeInsets.symmetric(
-                vertical: size.height * 0.005, horizontal: 5),
-            child: Row(
-              children: [
-                SizedBox(
-                    width: size.width * 0.2,
-                    child: const Text("Rank",
-                        style: TextStyle(color: Colors.black, fontSize: 15))),
-                SizedBox(
-                    width: size.width * 0.4,
-                    child: const Text("Name",
-                        style: const TextStyle(
-                            color: Colors.black, fontSize: 14))),
-                SizedBox(
-                    width: size.width * 0.3,
-                    child: const Text("Number of Votes",
-                        style: TextStyle(color: Colors.black, fontSize: 13))),
-                // Container(child: Text("Points", style: TextStyle(color: Colors.black, fontSize: 11))),
-              ],
-            ),
+    return Scaffold(
+      appBar: AppBar(title: Text("Election Result")),
+      body: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
           ),
-          FutureBuilder<Object>(
-              future: fetchElection(widget.index),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Loading();
-                }
-                final data = snapshot.data as List;
-                final numCan = data[2].toInt();
-                return ListView.builder(
-                  shrinkWrap: true,
-                    itemCount: numCan,
-                    itemBuilder: (context, index) {
-                      // List<dynamic> result = await ;
-                      return FutureBuilder<Object>(
-                          future: Blockchain().query('getCandidate',
-                              [BigInt.from(widget.index), BigInt.from(index)], ethereumClient),
-                          builder: (context, snapshot) {
-                            if(snapshot.connectionState== ConnectionState.waiting){
-                    return const CircularProgressIndicator();
+          child: SingleChildScrollView(
+              child: Column(children: [
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.blue[300],
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    topRight: Radius.circular(8),
+                  )),
+              padding: EdgeInsets.symmetric(
+                  vertical: size.height * 0.005, horizontal: 5),
+              child: Row(
+                children: [
+                  SizedBox(
+                      width: size.width * 0.2,
+                      child: const Text("Rank",
+                          style: TextStyle(color: Colors.black, fontSize: 15))),
+                  SizedBox(
+                      width: size.width * 0.4,
+                      child: const Text("Name",
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 14))),
+                  SizedBox(
+                      width: size.width * 0.3,
+                      child: const Text("Number of Votes",
+                          style: TextStyle(color: Colors.black, fontSize: 13))),
+                  // Container(child: Text("Points", style: TextStyle(color: Colors.black, fontSize: 11))),
+                ],
+              ),
+            ),
+            FutureBuilder<Object>(
+                future: fetchElection(widget.index),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Loading();
                   }
-                  if(snapshot.hasData){
-                  final res = snapshot.data as List;
-                            return FutureBuilder<Object>(
-                              future: Blockchain().query('getVotes',
-                                  [BigInt.from(widget.index), BigInt.from(res[0].toInt())], ethereumClient),
-                              builder: (context, snapshot) {
-                                final voteCount = snapshot.data as List;
-                                return Column(
-                                  children: [
-                                    Container(
-                                      decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(8),
-                                          bottomRight: Radius.circular(8),
-                                        ),
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 5, vertical: 5),
-                                      child: Row(
+                  final data = snapshot.data as List;
+                  final numCan = data[2].toInt();
+                  return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: numCan,
+                      itemBuilder: (context, index) {
+                        // List<dynamic> result = await ;
+                        return FutureBuilder<Object>(
+                            future: Blockchain().query(
+                                'getCandidate',
+                                [BigInt.from(widget.index), BigInt.from(index)],
+                                ethereumClient),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const CircularProgressIndicator();
+                              }
+                              if (snapshot.hasData) {
+                                final res = snapshot.data as List;
+                                return FutureBuilder<Object>(
+                                  future: Blockchain().query(
+                                      'getVotes',
+                                      [BigInt.from(widget.index), res[0]],
+                                      ethereumClient),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      final voteCount = snapshot.data as List;
+
+                                      return Column(
                                         children: [
                                           Container(
-                                              padding: EdgeInsets.only(
-                                                  left: size.width * 0.04),
-                                              width: size.width * 0.2,
-                                              child: Text(index.toString())),
-                                          SizedBox(
-                                              width: size.width * 0.5,
-                                              child: Text(
-                                                res[0],
-                                                softWrap: true,
-                                              )),
-                                          SizedBox(
-                                              width: size.width * 0.1,
-                                              child: Text(voteCount.toString(),
-                                                  softWrap: true)),
-                                          // Container(
-                                          //     child: Text(performanceData[index]["Points"],
-                                          //         softWrap: true)),
+                                            decoration: const BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.only(
+                                                bottomLeft: Radius.circular(8),
+                                                bottomRight: Radius.circular(8),
+                                              ),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 5, vertical: 5),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                    padding: EdgeInsets.only(
+                                                        left:
+                                                            size.width * 0.04),
+                                                    width: size.width * 0.2,
+                                                    child:
+                                                        Text(index.toString())),
+                                                SizedBox(
+                                                    width: size.width * 0.5,
+                                                    child: Text(
+                                                      res[0],
+                                                      softWrap: true,
+                                                    )),
+                                                SizedBox(
+                                                    width: size.width * 0.1,
+                                                    child: Text(
+                                                        voteCount.toString(),
+                                                        softWrap: true)),
+                                                // Container(
+                                                //     child: Text(performanceData[index]["Points"],
+                                                //         softWrap: true)),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: size.height * 0.004),
+                                            child:
+                                                const Divider(thickness: 1.5),
+                                          ),
                                         ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: size.height * 0.004),
-                                      child: const Divider(thickness: 1.5),
-                                    ),
-                                  ],
+                                      );
+                                    }
+                                    return const CircularProgressIndicator();
+                                  },
                                 );
-                              },
-                            );}
-                            return const CircularProgressIndicator();
-                          });
-                    });
-              })
-        ])));
+                              }
+                              return const CircularProgressIndicator();
+                            });
+                      });
+                })
+          ]))),
+    );
   }
 }

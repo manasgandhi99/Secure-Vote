@@ -235,21 +235,21 @@ class _CreateElectionFormState extends State<CreateElectionForm> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
                MaterialButton(
-                color: Colors.blueAccent,
+                color: Color.fromRGBO(68, 138, 255, 1),
                 onPressed: () async{
                   await pickFile();
+                  setState(() {
+                    
+                  });
                 },
                 child:const Text("Add CSV"),
               ),
-              emails.isNotEmpty ? ListView.builder(
-                itemCount: emails.length,
-                itemBuilder: (context, index) {
-                              return Column(
-        children: [
-          Container(
+              emails.isNotEmpty ? Column(
+                children: [
+                  Container(
             decoration: BoxDecoration(
                 color: Colors.blue[300],
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(8),
                   topRight: Radius.circular(8),
                 )),
@@ -261,37 +261,46 @@ class _CreateElectionFormState extends State<CreateElectionForm> {
                     width: size.width * 0.2,
                     child: Text("Sr. No.", style: headerTexstyle)),
                 SizedBox(
-                    width: size.width * 0.7,
+                    width: size.width * 0.3,
                     child: Text("Email", style: headerTexstyle)),
                
               ],
             ),
-          ),Container(
-                decoration: BoxDecoration(
-                  color: index % 2 == 0 ? const Color.fromRGBO(255, 255, 255, 1) : Colors.blue[100],
-                  borderRadius: index != emails.length - 1
-                      ? BorderRadius.zero
-                      : const BorderRadius.only(
-                          bottomLeft: Radius.circular(8),
-                          bottomRight: Radius.circular(8),
-                        ),
-                ),padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                child: Row(
-                  children: [
-                    Container(
-                        padding: EdgeInsets.only(left: size.width * 0.01),
-                        width: size.width * 0.2,
-                        child: Text((index+1).toString())),
-                    Container(
-                        width: size.width * 0.31,
-                        child: Text(
-                          emails[index],
-                          softWrap: true,
-                        )),
-                  ],
-                ),),]
-                            
-                              );}):SizedBox(),],),),];
+          ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: emails.length,
+                    itemBuilder: (context, index) {
+                                  return Column(
+        children: [
+          Container(
+                    decoration: BoxDecoration(
+                      color: index % 2 == 0 ? const Color.fromRGBO(255, 255, 255, 1) : Colors.blue[100],
+                      borderRadius: index != emails.length - 1
+                          ? BorderRadius.zero
+                          : const BorderRadius.only(
+                              bottomLeft: Radius.circular(8),
+                              bottomRight: Radius.circular(8),
+                            ),
+                    ),padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    child: Row(
+                      children: [
+                        Container(
+                            padding: EdgeInsets.only(left: size.width * 0.01),
+                            width: size.width * 0.2,
+                            child: Text((index+1).toString())),
+                        Container(
+                            width: size.width * 0.2,
+                            child: Text(
+                              emails[index],
+                              softWrap: true,
+                            )),
+                      ],
+                    ),),]
+                                
+                                  );}),
+                ],
+              ):SizedBox(),],),),];
           
       
 
@@ -337,6 +346,7 @@ class _CreateElectionFormState extends State<CreateElectionForm> {
                       if(privateKey != null){
                         print("Private key not null");
                         String code = getElectionId();
+                        print("code ${code.toString()}");
                         String result = await Blockchain().transaction('createElection', [code, nameController.text, BigInt.from(controllers.length), BigInt.from(startDate.millisecondsSinceEpoch), BigInt.from(endDate.millisecondsSinceEpoch), cand, fields[0]], ethereumClient, privateKey);
                         print('Final result after creating election: '+result);
                         print("Election created successfully");

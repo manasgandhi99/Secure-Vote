@@ -273,7 +273,7 @@ class _RegisterState extends State<Register> {
                     successCallback: () async{
                       stopEmailLoading();
                       SharedPreferences prefs = await SharedPreferences.getInstance();
-                        prefs.setString(PRIVATEKEYSHAREDPREFNAME, privateKeyController.text.trim());
+                        await prefs.setString(PRIVATEKEYSHAREDPREFNAME, privateKeyController.text.trim());
                     },
                     errorCallback: (error) {
                       print("Error");
