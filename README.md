@@ -1,4 +1,4 @@
-# Voting-System
+# Secure Vote - Voting-System
 A decentralized and transparent Blockchain-based voting application, built with Flutter, a Solidity Smart contract, Firebase and Infura by team AlphaDevs as a project for KJSCE Hack 6.0
 
 ## The problem Secure Vote solves
