@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
-final SHAREDPREFNAME = "DaybookIntroSeen";
+final SHAREDPREFNAME = "SecureVoteIntroSeen";
+final PRIVATEKEYSHAREDPREFNAME = "SecureVotePK";
 const DARKTHEMESHAREDPREF = "DaybookIsDarkTheme";
 
 //Auth Errors

@@ -5,7 +5,8 @@ import 'package:secure_vote/Pages/JoinElection/electionDetails.dart';
 import 'package:secure_vote/Pages/JoinElection/electionResult.dart';
 
 class ElectionPage extends StatefulWidget {
-  const ElectionPage({Key?key}) : super(key: key);
+  final int index;
+  const ElectionPage({required this.index});
 
   @override
   State<ElectionPage> createState() => _ElectionPageState();
@@ -27,14 +28,14 @@ class _ElectionPageState extends State<ElectionPage> {
                 Tab(icon: Icon(Icons.table_chart)),
               ],
             ),
-            title:  Text('Election Page'),
+            title:  const Text('Election Page'),
           ),
-          body: const TabBarView(
+          body: TabBarView(
 
             children: [
-              ElectionDetails(),
-              CandidateDetails(),
-              ElectionResults(),
+              ElectionDetails(index: widget.index),
+              CandidateDetails(index: widget.index),
+              ElectionResults(index:widget.index),
             ],
           ),
         ),

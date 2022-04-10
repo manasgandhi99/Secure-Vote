@@ -6,8 +6,8 @@ class Blockchain {
   String contractName = 'Voting';
   
   Future<DeployedContract> getContract() async {
-    String abi = await rootBundle.loadString("abi.json");
-    String contractAddress = "0x57E73b6F1E5cd741146E96B4Bb35F93e12016Cf8";
+    String abi = await rootBundle.loadString("assets/abi.json");
+    String contractAddress = "0x5CEc2D39bC3ae1154d20bd8289CF350438Be5283";
 
     DeployedContract contract = DeployedContract(
       ContractAbi.fromJson(abi, contractName),
@@ -35,6 +35,9 @@ class Blockchain {
         contract: contract,
         function: function,
         parameters: args,
+        maxGas: 6700000,
+        gasPrice: EtherAmount.inWei(BigInt.from(100000000000)),
+    
       ),
       fetchChainIdFromNetworkId: true,
       chainId: null,

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:secure_vote/Pages/Auth/Register.dart';
 import 'package:secure_vote/Services/authServices.dart';
+import 'package:secure_vote/Utils/constantStrings.dart';
 import 'package:secure_vote/Utils/constants.dart';
 import 'package:flutter/gestures.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -185,6 +187,7 @@ class _LoginState extends State<Login> {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: const CircularProgressIndicator())
                     : buildLoginWithEmailButton(context),
+                    
                 const SizedBox(height: 25),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(30.0, 0, 30.0, 0),
@@ -273,17 +276,19 @@ class _LoginState extends State<Login> {
                   await AuthServices.login(
                       email: email,
                       password: password,
-                      successCallback: () {
+                      successCallback: () async{
                         stopEmailLoading();
                         //TODO: Verify public/private keys
 
                         //TODO: Store private key in shared pref
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Register(),
-                          ),
-                        );
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        prefs.setString(PRIVATEKEYSHAREDPREFNAME, privateKeyController.text.trim());
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const Register(),
+                        //   ),
+                        // );
                       },
                       errorCallback: (error) {
                         print(error);

@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:secure_vote/Services/authServices.dart';
+import 'package:secure_vote/Utils/constantStrings.dart';
 import 'package:secure_vote/Utils/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -268,14 +270,10 @@ class _RegisterState extends State<Register> {
                     email: emailController.text.trim().toLowerCase(),
                     password: passwordController.text.trim(),
                     publicKey: publicKeyController.text.trim(),
-                    successCallback: () {
+                    successCallback: () async{
                       stopEmailLoading();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Register(),
-                        ),
-                      );
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                        prefs.setString(PRIVATEKEYSHAREDPREFNAME, privateKeyController.text.trim());
                     },
                     errorCallback: (error) {
                       print("Error");

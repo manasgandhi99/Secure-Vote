@@ -3,14 +3,6 @@
 import 'package:flutter/material.dart';
 import 'constantStrings.dart';
 
-enum Screens{
-  JOURNEYS,
-  ENTRIES,
-  HABITS,
-  TASKS,
-  PDFS,
-  IMAGES
-}
 
 const DARK_GREY = Color(0xffa3a8b8);  //darkgrey
 const GREY  = Color(0xffcbcbcb);      //grey
@@ -20,8 +12,6 @@ const BLUE = Color(0xffadd2ff);       //blue
 const PINK = Color(0xDAFFD1DC);       //pink
 const LIGHT_PINK = Color(0xFFF48FB1);  //lightpink
 const LIGHT_GREEN = Color(0xFF90EE90);//lightgreen
-
-const List<String> moodList = ["😭", "😥", "🙂", "😃", "😁"];
 
 const List<Color>  colorPalette = [DARK_GREY, GREY, YELLOW, RED, BLUE];
 final List<Color>  habitsColorPalette = [BLUE, LIGHT_GREEN, YELLOW, RED, LIGHT_PINK, GREY];
@@ -83,21 +73,6 @@ const Map<String, String> passwordChangeExceptionMessageMap = {
   "user-not-found":USER_NOT_FOUND,
 };
 
-final Map<String, String> moodText = {
-    "Terrible": "Terrible 😭",
-    "Bad": "Bad 😥",
-    "Neutral": "Neutral 🙂",
-    "Good": "Good 😃",
-    "Wonderful": "Wonderful 😁"
-  };
-
-final Map<String, String> moodMap = {
-  "😭": "Terrible",
-  "😥": "Bad",
-  "🙂": "Neutral",
-  "😃": "Good",
-  "😁": "Wonderful"
-};
 
 const EMAIL_REGEX = r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$";
 
@@ -115,21 +90,3 @@ const ENTRY_LOTTIE_FILE = "assets/lottieFiles/entries.json";
 const HABIT_LOTTIE_FILE = "assets/lottieFiles/habits.json";
 const TASK_LOTTIE_FILE  = "assets/lottieFiles/tasks.json";
 const STATS_LOTTIE_FILE = "assets/lottieFiles/stats.json";
-
-const Map<Screens, String> noDataImageMap = {
-  Screens.ENTRIES:  NO_ENTRY_IMAGE,
-  Screens.TASKS:    NO_TASK_IMAGE,
-  Screens.HABITS:   NO_HABIT_IMAGE,
-  Screens.JOURNEYS: NO_JOURNEY_IMAGE,
-  Screens.IMAGES:   NO_IMAGES_IMAGE,
-  Screens.PDFS:     NO_PDFS_IMAGE,
-}; 
-
-const Map<Screens, String> noDataMessagesMap = {
-  Screens.ENTRIES:  NO_ENTRY_MESSAGE,
-  Screens.TASKS:    NO_TASK_MESSAGE,
-  Screens.HABITS:   NO_HABIT_MESSAGE,
-  Screens.JOURNEYS: NO_JOURNEY_MESSAGE,
-  Screens.IMAGES:   NO_IMAGES_MESSAGE,
-  Screens.PDFS:     NO_PDFS_MESSAGE,
-};

@@ -1,13 +1,13 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
-import 'dart:io';
-import 'package:csv/csv.dart';
 import 'package:http/http.dart';
+import 'package:secure_vote/Pages/CreateElection/ElectionDetailsStep.dart';
+import 'package:secure_vote/Pages/JoinElection/electionResult.dart';
 import 'package:secure_vote/Utils/loading.dart';
 import 'package:secure_vote/blockchain/blockchain.dart';
 import 'package:web3dart/web3dart.dart';
-import 'stepper.dart';
+import 'package:secure_vote/Pages/CreateElection/stepper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CreateElection extends StatefulWidget {
   const CreateElection({Key? key}) : super(key: key);
@@ -18,20 +18,33 @@ class CreateElection extends StatefulWidget {
 
 class _CreateElectionState extends State<CreateElection> {
   bool loading = true;
-  String apiUrl = "http://localhost:7545";
+  String apiUrl =
+      "https://ropsten.infura.io/v3/fc3a18ef9bd9423bb6189a6381082e32";
   int electionCount = 0;
   var httpClient = Client();
   var ethereumClient;
+  late DocumentSnapshot userSnapshot;
+  late List<String> electionIds;
 
   fetchData() async {
-    ethereumClient = Web3Client(apiUrl, httpClient);
+    // ethereumClient = Web3Client(apiUrl, httpClient);
     List<dynamic> list =
         await Blockchain().query('electionCount', [], ethereumClient);
-    electionCount = list[0].toInt();
+        electionCount = list[0].toInt();
+
+        print("election count: " + electionCount.toString());
 
     // List<dynamic> list = await Blockchain().query('elections', [BigInt.from(2)], ethereumClient);
-    print(list);
-    setState(() => loading = false);
+    // print(list);
+    if (FirebaseAuth.instance.currentUser != null) {
+      String? userEmail = FirebaseAuth.instance.currentUser!.email;
+      userSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userEmail)
+          .get();
+      electionIds = List<String>.from(userSnapshot['createdElectionIds']);
+      setState(() => loading = false);
+    }
     // String result = await Blockchain().transaction('createElection', ['testcode','Student Council GSec', BigInt.from(4), BigInt.from(1649512433), BigInt.from(1649599999), ['Akshar','Yash','Rajan','Manas'], [EthereumAddress.fromHex('0x24E2823D982bFFC1441F941d1587c4EEe35EE4ed')]], ethereumClient, '8b54c6ccd87bacf4889dd25ce67755b818b5e09d781676d895cf57ab7a64479b');
     // print("Resukt: "+ result);
   }
@@ -44,33 +57,21 @@ class _CreateElectionState extends State<CreateElection> {
 
   @override
   initState() {
+    ethereumClient = Web3Client(apiUrl, httpClient);
     fetchData();
     super.initState();
   }
 
-  pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      PlatformFile file = result.files.first;
-      String? path = file.path;
-      final input = File(path ?? "").openRead();
-      final fields = await input
-          .transform(utf8.decoder)
-          .transform(new CsvToListConverter())
-          .toList();
-
-      print(fields);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: loading
           ? Loading()
           : Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: ListView(
+                shrinkWrap: true,
                 children: [
                   for (int i = 1; i <= electionCount; i++)
                     FutureBuilder(
@@ -81,14 +82,175 @@ class _CreateElectionState extends State<CreateElection> {
                           return Loading();
                         } else {
                           final data = snapshot.data as List;
-                          return Container(
-                            child: Column(children: [
-                              Text(data[1]),
-                            ]),
-                          );
+                          
+                          if (!electionIds.contains(data[0])) {
+                            return InkWell(
+                              onTap:(){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>ElectionResults(index:i)));
+                              },
+                              child: ClipRRect(
+                              borderRadius: BorderRadius.circular(25.0),
+                              child: Card(
+                                elevation: 6,
+                                color: Colors.lightBlue[50],
+                                child: Row(
+                                  children: <Widget>[
+                                    SizedBox(
+                                      width: size.width * 0.035,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        MergeSemantics(
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                "Election Name: " + data[1].toString(),
+                                                overflow: TextOverflow.ellipsis,
+                                                softWrap: true,
+                                                style: const TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w600,
+                                                    ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        Text(
+                                          "Number of Candidates: " + data[2].toString(),
+                                          overflow: TextOverflow.ellipsis,
+                                          softWrap: true,
+                                          style: const TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        Text(
+                                          "Start Date: " + data[3].toString(),
+                                          overflow: TextOverflow.ellipsis,
+                                          softWrap: true,
+                                          style: const TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        Text(
+                                          "End Date: " + data[4].toString(),
+                                          overflow: TextOverflow.ellipsis,
+                                          softWrap: true,
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600,
+                                              color: Theme.of(context)
+                                                  .primaryColor),
+                                        ),
+
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                          ),
+                            );
+                          }
+                          print("snapshot.data: ");
+                          print(snapshot.data);
+                          
+                          return InkWell(
+                              onTap:(){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>ElectionResults(index:i)));
+                              },
+                                  child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                  child: Card(
+                                    elevation: 6,
+                                    color: Colors.lightBlue[50],
+                                    child: Row(
+                                      children: <Widget>[
+                                        SizedBox(
+                                          width: size.width * 0.035,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            MergeSemantics(
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Text(
+                                                    "Election Name: " + data[1].toString(),
+                                                    overflow: TextOverflow.ellipsis,
+                                                    softWrap: true,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight: FontWeight.w600,
+                                                        ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            const SizedBox(height: 5),
+                                            Text(
+                                              "Number of Candidates: " + data[2].toString(),
+                                              overflow: TextOverflow.ellipsis,
+                                              softWrap: true,
+                                              style: const TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
+                                            const SizedBox(height: 5),
+                                            Text(
+                                              "Start Date: " + data[3].toString(),
+                                              overflow: TextOverflow.ellipsis,
+                                              softWrap: true,
+                                              style: const TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
+                                            const SizedBox(height: 5),
+                                            Text(
+                                              "End Date: " + data[4].toString(),
+                                              overflow: TextOverflow.ellipsis,
+                                              softWrap: true,
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Theme.of(context)
+                                                      .primaryColor),
+                                            ),
+
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                              ),
+                            );
                         }
                       }),
-                    )
+                    ),
+                  electionCount == 0
+                      ? const Center(
+                          child:
+                              Text("You have not created any elections yet!"),
+                        )
+                      : const SizedBox()
+                  // const SizedBox()
+                  // ListView.builder(
+                  //   itemCount: electionCount,
+                  //   itemBuilder: (context, index)
+                  //   {
+                  //     return Card(
+                  //       child: data[index],
+                  //     );
+                  //   }
+                  // )
                 ],
               ),
             ),
@@ -96,7 +258,9 @@ class _CreateElectionState extends State<CreateElection> {
         onPressed: () {
           // Add your onPressed code here!
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => StepperForm()));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const CreateElectionForm()));
         },
         tooltip: 'Create Election',
         backgroundColor: Colors.blue,

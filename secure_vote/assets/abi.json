@@ -32,12 +32,35 @@
 				"type": "string[]"
 			},
 			{
-				"internalType": "address[]",
+				"internalType": "string[]",
 				"name": "_eligibleVoters",
-				"type": "address[]"
+				"type": "string[]"
 			}
 		],
 		"name": "createElection",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "electionId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_candidate",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "email",
+				"type": "string"
+			}
+		],
+		"name": "vote",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -159,24 +182,6 @@
 			}
 		],
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "electionId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_candidate",
-				"type": "string"
-			}
-		],
-		"name": "vote",
-		"outputs": [],
-		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ]

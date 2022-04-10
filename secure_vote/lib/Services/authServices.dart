@@ -21,10 +21,10 @@ class AuthServices {
       print(user);
     } catch (e) {
       print("Error during login with email.");
-      String errorMessage =
+      String? errorMessage =
           "Some error occured! Please check your internet connection.";
       if (e is FirebaseAuthException) {
-        errorMessage = authExceptionMessageMap[e.code]!;
+        errorMessage = authExceptionMessageMap[e.code];
         print(e);
         print(e.code);
       }
@@ -61,10 +61,11 @@ class AuthServices {
         });
 
         successCallback();
+        return;
       }
       errorCallback(DEFAULT_AUTH_ERROR);
     } catch (e) {
-      print("Error during login with email.");
+      print("Error during registering with email.");
       print(e);
 
       String errorMessage = DEFAULT_AUTH_ERROR;
@@ -76,15 +77,14 @@ class AuthServices {
       }
 
       print("Attempting to log out");
-      logout();
+      signOut();
       errorCallback(errorMessage);
 
       return;
     }
   }
 
-  static void logout() async {
-    // setUserEmail("");
+  static void signOut() async {
     await _firebaseAuth.signOut();
   }
 }
