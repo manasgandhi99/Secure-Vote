@@ -45,8 +45,7 @@ class _CreateElectionState extends State<CreateElection> {
       electionIds = List<String>.from(userSnapshot['createdElectionIds']);
       setState(() => loading = false);
     }
-    // String result = await Blockchain().transaction('createElection', ['testcode','Student Council GSec', BigInt.from(4), BigInt.from(1649512433), BigInt.from(1649599999), ['Akshar','Yash','Rajan','Manas'], [EthereumAddress.fromHex('0x24E2823D982bFFC1441F941d1587c4EEe35EE4ed')]], ethereumClient, '8b54c6ccd87bacf4889dd25ce67755b818b5e09d781676d895cf57ab7a64479b');
-    // print("Resukt: "+ result);
+
   }
 
   Future<List<dynamic>> fetchElection(int index) async {
