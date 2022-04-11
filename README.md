@@ -1,5 +1,5 @@
-# Secure Vote - Voting-System
-A decentralized and transparent Blockchain-based voting application, built with Flutter, a Solidity Smart contract, Firebase and Infura by team AlphaDevs as a project for KJSCE Hack 6.0
+# Secure Vote 
+A decentralized and transparent Blockchain-based voting application, built with Flutter, a Solidity Smart contract, Firebase and Infura as a project for KJSCE Hack 6.0
 
 ## The problem Secure Vote solves
 
@@ -16,8 +16,5 @@ A decentralized and transparent Blockchain-based voting application, built with 
 4) All these transactions sometimes failed or else took a lot of time due to high traffic, high gas prices and lack of miners which in all consumed most of our time in testing the smart contract.
 
 
-Project Created By:
-Akshar Barchha
-Manas Gandhi
-Rajan Gaul
-Yash Satra
+<h3 align="center"><b>Developed with :heart: by <a href="https://github.com/aksharbarchha">Akshar</a>, <a href="https://github.com/gandhiboys">Manas</a>, <a href="https://github.com/mahanvyakti">Rajan</a> and <a href="https://github.com/Yash4900">Yash</a>.</b></h3>
+
